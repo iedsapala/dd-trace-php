@@ -19,6 +19,7 @@ use DDTrace\Integrations\Predis\PredisIntegration;
 use DDTrace\Integrations\Slim\SlimIntegration;
 use DDTrace\Integrations\Symfony\SymfonyIntegration;
 use DDTrace\Integrations\Web\WebIntegration;
+use DDTrace\Integrations\WordPress\WordPressSandboxedIntegration;
 use DDTrace\Integrations\ZendFramework\ZendFrameworkIntegration;
 use DDTrace\Log\LoggingTrait;
 
@@ -75,6 +76,7 @@ class IntegrationsLoader
         // Sandboxed integrations get loaded with a feature flag
         if (Configuration::get()->isSandboxEnabled()) {
             $this->integrations[PDOSandboxedIntegration::NAME] = '\DDTrace\Integrations\PDO\PDOSandboxedIntegration';
+            $this->integrations[WordPressSandboxedIntegration::NAME] = '\DDTrace\Integrations\WordPress\WordPressSandboxedIntegration';
         }
     }
 
