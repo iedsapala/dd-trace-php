@@ -1,4 +1,9 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+use DDTrace\Configuration;
+use DDTrace\SpanData;
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------------
 | Hooks
@@ -10,7 +15,9 @@
 |
 */
 
+$hooks = array();
 
+require dirname(dirname(ini_get('ddtrace.request_init_hook'))) . '/bridge/dd_init.php';
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

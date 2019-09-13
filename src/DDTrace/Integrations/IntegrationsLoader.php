@@ -15,6 +15,7 @@ use DDTrace\Integrations\Memcached\MemcachedIntegration;
 use DDTrace\Integrations\Memcached\MemcachedSandboxedIntegration;
 use DDTrace\Integrations\Mongo\MongoIntegration;
 use DDTrace\Integrations\Mysqli\MysqliIntegration;
+use DDTrace\Integrations\CodeIgniter\V2_2\CodeIgniterSandboxedIntegration;
 use DDTrace\Integrations\PDO\PDOIntegration;
 use DDTrace\Integrations\PDO\PDOSandboxedIntegration;
 use DDTrace\Integrations\Predis\PredisIntegration;
@@ -82,6 +83,8 @@ class IntegrationsLoader
                 '\DDTrace\Integrations\Memcached\MemcachedSandboxedIntegration';
             $this->integrations[PDOSandboxedIntegration::NAME] =
                 '\DDTrace\Integrations\PDO\PDOSandboxedIntegration';
+            $this->integrations[CodeIgniterSandboxedIntegration::NAME] =
+                '\DDTrace\Integrations\CodeIgniter\V2_2\CodeIgniterSandboxedIntegration';
         }
     }
 

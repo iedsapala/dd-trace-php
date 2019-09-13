@@ -72,7 +72,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = 'application';
+	$application_folder = __DIR__ . '/application';
 
 /*
  * --------------------------------------------------------------------
@@ -146,7 +146,7 @@ if (defined('ENVIRONMENT'))
 	}
 
 	// ensure there's a trailing slash
-	$system_path = rtrim($system_path, '/').'/';
+	$system_path = __DIR__ . '/' . rtrim($system_path, '/').'/';
 
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
