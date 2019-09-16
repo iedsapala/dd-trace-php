@@ -33,6 +33,21 @@ class WordPressIntegrationLoader
 
         $loader = $this;
 
+        // Core
+        /*
+        dd_trace_function('wp_initial_constants', function (SpanData $span) {
+            $span->name = $span->resource = 'wp_initial_constants';
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+        */
+
+        dd_trace_method('WP', 'main', function (SpanData $span) {
+            $span->name = $span->resource = 'WP.main';
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
         dd_trace_method('WP', 'init', function (SpanData $span) {
             $span->name = $span->resource = 'WP.init';
             $span->type = Type::WEB_SERVLET;
@@ -75,6 +90,81 @@ class WordPressIntegrationLoader
             $span->type = Type::WEB_SERVLET;
             $span->service = WordPressSandboxedIntegration::getAppName();
         });
+
+        /*
+        dd_trace_function('wp_load_alloptions', function (SpanData $span) {
+            $span->name = $span->resource = 'wp_load_alloptions';
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+        */
+
+        dd_trace_function('do_action', function (SpanData $span, array $args) {
+            $span->name = 'do_action';
+            $span->resource = $args[0];
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+            $span->meta = [
+                'wordpress.action' => $args[0],
+            ];
+        });
+
+        // Database
+        dd_trace_method('wpdb', '__construct', function (SpanData $span, array $args) {
+            $span->name = $span->resource = 'wpdb.__construct';
+            $span->type = Type::SQL;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+            $span->meta = [
+                'db.user' => (string) $args[0],
+                'db.name' => (string) $args[2],
+                'db.host' => (string) $args[3],
+            ];
+        });
+
+        dd_trace_method('wpdb', 'query', function (SpanData $span, array $args) {
+            $span->name = 'wpdb.query';
+            $span->resource = (string) $args[0];
+            $span->type = Type::SQL;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        // Views
+        dd_trace_function('get_header', function (SpanData $span, array $args) {
+            $span->name = 'get_header';
+            $span->resource = !empty($args[0]) ? (string) $args[0] : $span->name;
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        dd_trace_function('load_template', function (SpanData $span, array $args) {
+            $span->name = 'load_template';
+            $span->resource = !empty($args[0]) ? (string) $args[0] : $span->name;
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        dd_trace_function('comments_template', function (SpanData $span, array $args) {
+            $span->name = 'comments_template';
+            $span->resource = !empty($args[0]) ? (string) $args[0] : $span->name;
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        dd_trace_function('get_sidebar', function (SpanData $span, array $args) {
+            $span->name = 'get_sidebar';
+            $span->resource = !empty($args[0]) ? (string) $args[0] : $span->name;
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        dd_trace_function('get_footer', function (SpanData $span, array $args) {
+            $span->name = 'get_footer';
+            $span->resource = !empty($args[0]) ? (string) $args[0] : $span->name;
+            $span->type = Type::WEB_SERVLET;
+            $span->service = WordPressSandboxedIntegration::getAppName();
+        });
+
+        // Cache
 
         return Integration::LOADED;
     }
